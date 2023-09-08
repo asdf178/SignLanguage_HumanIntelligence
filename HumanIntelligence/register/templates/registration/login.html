@@ -1,0 +1,19 @@
+{% extends "main/base.html" %}
+{% load crispy_forms_tags %}
+
+{% block title %}
+로그인
+{% endblock %}
+
+{% block nav %}
+{% include "register/nav.html" %}
+{% endblock  %}
+
+{% block content %}    
+    <form method="post" class="form-group">
+        {% csrf_token %}
+        {{form|crispy}}
+        <p>계정이 없으신가요? <a href="/register">여기</a>에서 가입하세요</p>
+        <button type="submit" class="btn btn-primary">로그인</button>
+    </form>
+{% endblock %}

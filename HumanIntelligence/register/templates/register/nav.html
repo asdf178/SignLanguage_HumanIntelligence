@@ -1,0 +1,13 @@
+{% csrf_token %}
+
+{% if user.is_authenticated %} <!-- 로그인 했을 때 -->
+    <div class="col-md-3 text-end">
+        <button type="submit" name="register" class="btn btn-primary" onClick="location.href='/logout'">로그아웃</button>
+        <a>{{user}}</a>
+    </div>
+{% else %} <!-- 로그인 안 했을 때 -->
+    <div class="col-md-3 text-end">
+        <button type="submit" name="login" class="btn btn-outline-primary me-2" onClick="location.href='/login'">로그인</button>
+        <button type="submit" name="register" class="btn btn-primary" onClick="location.href='/register'">회원가입</button>
+    </div>    
+{% endif %}

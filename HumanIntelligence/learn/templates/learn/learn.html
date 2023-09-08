@@ -1,0 +1,40 @@
+{% extends "main/base.html" %}
+
+{% block title %}학습{% endblock %}
+
+{% block nav %}
+<form method="get" class="d-flex" role="search">
+    {% csrf_token %}
+    <input name="word" class="form-control me-2" type="search" placeholder="단어를 검색하세요." aria-label="Search"> <!-- 검색창 -->
+    <input name="search" value="검색" class="btn btn-outline-primary me-2" type="submit"></input> <!-- 검색 버튼 -->
+</form>
+{% include 'register/nav.html' %}
+{% endblock %}
+
+{% block content %}
+<form method="GET" name="learn_page">
+    <div class="row">
+        {% for action, path in image_list.items %}
+            {% if action in complete_list %} <!-- action이 complete됐으면 초록색 버튼 -->
+            <div class="col">
+                <div class="card" style="width: 18rem;">
+                    <img src={{path}} class="card-img-top" alt="..." width=200 height=300 >
+                    <div class="card-body">
+                    <button type="submit" name={{action}} value={{action}} class="btn btn-outline-success">{{action}}</button>
+                    </div>
+                </div>
+            </div>
+            {% else %} <!-- action이 incomplete됐으면 파란색 버튼 -->
+            <div class="col">
+                <div class="card" style="width: 18rem;">
+                    <img src={{path}} class="card-img-top" alt="..." width=200 height=300 >
+                    <div class="card-body">
+                    <button type="submit" name={{action}} value={{action}} class="btn btn-outline-primary me-2">{{action}}</button>
+                    </div>
+                </div>
+            </div>
+            {% endif %}
+        {% endfor %}
+    </div>
+</form>
+{% endblock %}

@@ -1,0 +1,87 @@
+{% extends "main/base.html" %}
+
+{% block title %}{{action}}{% endblock %}
+
+{% block nav %}
+<form method="get" class="d-flex" role="search">
+    {% csrf_token %}
+    <input name="word" class="form-control me-2" type="search" placeholder="단어를 검색하세요." aria-label="Search"> <!-- 검색창 -->
+    <input name="search" value="검색" class="btn btn-outline-success" type="submit"></input> <!-- 검색 버튼 -->
+</form>
+{% include 'register/nav.html' %}
+{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col">
+        <video src="{{path}}" autoplay loop muted></video> <!-- 비디오 -->
+    </div>
+    <div class="col" id="camera"></div>
+</div>
+<div class="row">
+    <div class="col">
+        <span id="prediction_score">Loading...</span> <!-- 카메라 준비 안 됐다면 loading -->
+    </div>
+    <div class="row">
+        <span id="complete"></span>
+    </div>
+</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/webcamjs/1.0.26/webcam.min.js"></script>
+<script>
+    Webcam.set({ // 카메라 세팅
+        width: 640,
+        height: 480,
+        image_format: 'jpeg',
+        jpeg_quality: 90
+    })
+    Webcam.attach("#camera")
+    Webcam.on('error', function(err){ // 카메라가 준비 안 됐다면 log 남김
+        console.log("please wait for a second");
+    });
+
+    var refresh; // 새로운 단어를 학습할 때마다 sequence_learn 리스트 초기화하기 위한 변수
+    refresh = '{{refresh}}';
+
+    // 카메라 켜졌는지 확인
+    navigator.getMedia = ( navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia || navigator.msGetUserMedia);
+    
+    navigator.getMedia({video: true}, function() { // 카메라 준비됨
+        setInterval(function(){ // 10ms 마다 반복
+        Webcam.snap(function(data_uri){
+            $.ajax({ // ajax로 데이터 주고 받음
+            type:'POST',
+            url:'{{url}}',
+            async: false,
+            data:{
+                encoded:data_uri, // base64로 인코딩된 이미지 정보
+                action:'{{action}}', // html 렌더할 때 받은 변수
+                refresh:refresh,
+            },
+            success: function(response){ // ajax 통신이 성공했을 때
+                result = response.res; // predict 결과
+                score = result[response.label_map['{{action}}']] * 100;
+                refresh = "false";
+
+                if (response.complete == "true"){ // action complete이라면
+                    document.getElementById('complete').innerText = "COMPLETE";
+                } else{ // action complete이 아니라면
+                    document.getElementById('complete').innerText = "NOT COMPLETE";
+                }
+
+                if (score != 0){ // sequence의 길이가 40일 때
+                    document.getElementById('prediction_score').innerText = score; // collecting을 점수로                      
+                } else{ // sequence의 길이가 40이 안 되어 동작을 모으고 있는 중일 때
+                    var progress = (response.length / 40) * 100;
+                    // loading을 collecting으로
+                    document.getElementById('prediction_score').innerText = 'Collecting... ' + progress.toFixed() + "%";
+                }
+            }
+        })
+        });
+
+    }, 10);
+    }, function() { // 카메라 준비 안 됨
+        alert("webcam is not loaded!!!!!!!");
+    });
+</script>
+{% endblock %}

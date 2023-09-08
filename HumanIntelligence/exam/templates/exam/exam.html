@@ -1,0 +1,107 @@
+{% extends "main/base.html" %}
+
+{% block title %}시험{% endblock %}
+
+{% block nav %}
+{% include 'register/nav.html' %}
+{% endblock %}
+
+{% block style %}
+<style>
+    #box { /* 단어 나오는 상자 부분 */
+        border: 1px solid;
+    }
+
+    #action_chosen {
+        /* font-family: 'Black Han Sans', sans-serif; */
+        src: url("../../../static/fonts/Orbit-Regular") format("woff2");
+        font-family: 'Orbit-Regular', 'Orbit', sans-serif;
+        font-size: 70px;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col" id="box">
+        <span id="action_chosen"></span> <!-- action 이름 -->
+    </div>
+    <div class="col" id="camera"></div> <!-- 카메라 -->
+</div>
+<div class="row">
+    <div class="col">
+        <span id="prediction_score">Loading...</span> <!-- 카메라 준비 안 됐다면 loading -->
+    </div>
+    <div class="col">
+        <span id="complete">X</span> <!-- complete 했는지 안 했는지 -->
+    </div>
+</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/webcamjs/1.0.26/webcam.min.js"></script>
+<script>
+    Webcam.set({ // 카메라 세팅
+        width: 640,
+        height: 480,
+        image_format: 'jpeg',
+        jpeg_quality: 90
+    })
+    Webcam.attach("#camera")
+    Webcam.on('error', function(err){ // 카메라가 준비 안 됐다면 log 남김
+        console.log("please wait for a second");
+    });
+
+    var action_chosen, correct;
+    correct = true; // 점수가 70점이 넘어서 다른 단어로 넘길 때 쓰는 변수
+
+    function sleep(ms){ // 70점 넘었을 때 잠시 대기함
+    const wakeUpTime = Date.now() + ms;
+    while (Date.now() < wakeUpTime) {}
+    }
+
+    // 카메라 켜졌는지 확인
+    navigator.getMedia = ( navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia || navigator.msGetUserMedia);
+    
+    navigator.getMedia({video: true}, function() { // 카메라 준비됨
+        setInterval(function(){ // 10ms 마다 반복
+        Webcam.snap(function(data_uri){
+            $.ajax({ // ajax로 데이터 주고 받음
+            type:'POST',
+            url:'{{url}}',
+            async: false,
+            data:{
+                encoded:data_uri, // base64로 인코딩된 이미지 정보
+                clear:correct,
+                action:action_chosen, // 랜덤으로 골라진 action
+            },
+            success: function(response){ // ajax 통신이 성공했을 때
+                result = response.res; // predict 결과
+                score = result[response.label_map[response.action]] * 100;
+                action_chosen = response.action;
+                document.getElementById('action_chosen').innerText = action_chosen; // action 이름 띄어줌
+  
+                if(score >= 70){ // 70점 넘으면 complete 표시하고 2초 뒤에 다른 단어로 넘어감
+                    correct = true;
+                    document.getElementById('prediction_score').innerText = complete;
+                    document.getElementById('complete').innerText = "O"; 
+                    sleep(2000);
+                } else{ // 70점 안 넘었을 때
+                    correct = false;
+                    document.getElementById('complete').innerText = "X"; 
+                }
+
+                if (score != 0){ // sequence의 길이가 40일 때
+                    document.getElementById('prediction_score').innerText = score; // collecting을 점수로                     
+                } else{ // sequence의 길이가 40이 안 되어 동작을 모으고 있는 중일 때
+                    var progress = (response.length / 40) * 100;
+                    // loading을 collecting으로
+                    document.getElementById('prediction_score').innerText = "Collecting... " + progress.toFixed() + "%";
+                }
+            }
+        })
+        });
+
+    }, 10);
+    }, function() { // 카메라 준비 안 됨
+        alert("webcam is not loaded!!!!!!!");
+    });
+</script>
+{% endblock %}
