@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from HumanIntelligence.settings import IMAGE_LIST, VIDEO_LIST
+from HumanIntelligence.settings import IMAGE_LIST, VIDEO_LIST, ima_ah_LIST, ima_ba_LIST, ima_cha_LIST, ima_da_LIST, ima_ga_LIST, ima_ha_LIST, ima_ja_LIST, ima_na_LIST, ima_sa_LIST
 from django.views.decorators.csrf import csrf_exempt
 from utils import Decoding, CheckAction, CheckComplete, CreateAction, CompleteAction, GetActionComplete
 from deep_learning import actions
@@ -27,8 +27,7 @@ def learn(response):
                 return render(response, "learn/learn_v.html", {"action":action, "path":VIDEO_LIST[action], "url":"learn_v/", "actions":actions.tolist(), "refresh":refresh})        
 
     complete, incomplete = GetActionComplete(response.user) # complete한 action은 초록색, incomplete한 action은 파란색
-
-    return render(response, "learn/learn.html", {"image_list":IMAGE_LIST, "complete_list":complete, "incomplete_list":incomplete}) # html 페이지 렌더를 위해 한 번만 실행됨
+    return render(response, "learn/learn.html", {"image_list":IMAGE_LIST, "complete_list":complete, "incomplete_list":incomplete, "ima_ah":ima_ah_LIST, "ima_ba":ima_ba_LIST, "ima_da":ima_da_LIST, "ima_ga":ima_ga_LIST, "ima_ha":ima_ha_LIST, "ima_ja":ima_ja_LIST, "ima_na":ima_na_LIST, "ima_sa":ima_sa_LIST, "ima_cha": ima_cha_LIST, }) # html 페이지 렌더를 위해 한 번만 실행됨
 
 @csrf_exempt # csrf 오류 방지
 def learn_v(response):

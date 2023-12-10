@@ -12,9 +12,62 @@
 {% endblock %}
 
 {% block content %}
+
+<!DOCTYpE html>
+<html>
+    <head>
+        <style>
+            .ttt {
+                font-size: 20px;
+            }
+        </style>
+    </head>
+    <body>
+    <p class="ttt"> <br> 안녕하세요, 여기는 수화 학습화면입니다. </p>
+    <p class="ttt"> 이곳에선 다양한 수화 단어를 보고, 따라해볼 수 있습니다. </p>
+    <p class="ttt"> 충분히 학습했다면, <a href="http://127.0.0.1:8000/exam/" style="font-size: 20px;">"시험"</a> 버튼을 눌러 자신의 실력을 테스트해보세요! </p>
+    <hr>
+    <p style="color: rgb(218, 74, 74); font-size: 15px;"> tip! 하단 로딩바가 전부 찰 때까지 동작을 <b><u>'크게'</em></u> 반복해보세요! </p>
+    </body>
+</html>
+<!DOCTYpE html>
+<html>
+    <head>
+        <style>
+            .ooo {
+                font-size: 40px;
+            }
+        </style>
+    </head>
+    <body>
 <form method="GET" name="learn_page">
-    <div class="row">
-        {% for action, path in image_list.items %}
+    <ul>
+    <li><p class="ooo"> ㄱ </p></li>
+        {% for action, path in ima_ga.items %}
+            {% if action in complete_list %} <!-- action이 complete됐으면 초록색 버튼 -->
+            <div class="col">
+                <div class="card" style="width: 18rem;">
+                    <img src={{path}} class="card-img-top" alt="..." width=200 height=300 >
+                    <div class="card-body">
+                    <button type="submit" name={{action}} value={{action}} class="btn btn-outline-success">{{action}}</button>
+                    </div>
+                </div>
+            </div>
+            {% else %} <!-- action이 incomplete됐으면 파란색 버튼 -->
+            <div class="col">
+                <div class="card" style="width: 18rem;">
+                    <img src={{path}} class="card-img-top" alt="..." width=200 height=300 >
+                    <div class="card-body">
+                    <button type="submit" name={{action}} value={{action}} class="btn btn-outline-primary me-2">{{action}}</button>
+                    </div>
+                </div>
+            </div>
+            {% endif %}
+            {% endfor %}
+        </ul>
+    <ul>
+    <li><p class="ooo"> ㄴ </p></li>
+        {% for action, path in ima_na.items %}
             {% if action in complete_list %} <!-- action이 complete됐으면 초록색 버튼 -->
             <div class="col">
                 <div class="card" style="width: 18rem;">
@@ -35,6 +88,176 @@
             </div>
             {% endif %}
         {% endfor %}
+        </ul>
+    <ul>
+        <li><p class="ooo"> ㄷ </p></li>
+        {% for action, path in ima_da.items %}
+            {% if action in complete_list %} <!-- action이 complete됐으면 초록색 버튼 -->
+            <div class="col">
+                <div class="card" style="width: 18rem;">
+                    <img src={{path}} class="card-img-top" alt="..." width=200 height=300 >
+                    <div class="card-body">
+                    <button type="submit" name={{action}} value={{action}} class="btn btn-outline-success">{{action}}</button>
+                    </div>
+                </div>
+            </div>
+            {% else %} <!-- action이 incomplete됐으면 파란색 버튼 -->
+            <div class="col">
+                <div class="card" style="width: 18rem;">
+                    <img src={{path}} class="card-img-top" alt="..." width=200 height=300 >
+                    <div class="card-body">
+                    <button type="submit" name={{action}} value={{action}} class="btn btn-outline-primary me-2">{{action}}</button>
+                    </div>
+                </div>
+            </div>
+            {% endif %}
+        {% endfor %}
+    </ul>
+    <ul>
+        <li><p class="ooo"> ㅂ </p></li>
+        {% for action, path in ima_ba.items %}
+            {% if action in complete_list %} <!-- action이 complete됐으면 초록색 버튼 -->
+            <div class="col">
+                <div class="card" style="width: 18rem;">
+                    <img src={{path}} class="card-img-top" alt="..." width=200 height=300 >
+                    <div class="card-body">
+                    <button type="submit" name={{action}} value={{action}} class="btn btn-outline-success">{{action}}</button>
+                    </div>
+                </div>
+            </div>
+            {% else %} <!-- action이 incomplete됐으면 파란색 버튼 -->
+            <div class="col">
+                <div class="card" style="width: 18rem;">
+                    <img src={{path}} class="card-img-top" alt="..." width=200 height=300 >
+                    <div class="card-body">
+                    <button type="submit" name={{action}} value={{action}} class="btn btn-outline-primary me-2">{{action}}</button>
+                    </div>
+                </div>
+            </div>
+            {% endif %}
+        {% endfor %}
+    </ul>
+        <ul>
+        <li><p class="ooo"> ㅅ </p></li>
+        {% for action, path in ima_sa.items %}
+            {% if action in complete_list %} <!-- action이 complete됐으면 초록색 버튼 -->
+            <div class="col">
+                <div class="card" style="width: 18rem;">
+                    <img src={{path}} class="card-img-top" alt="..." width=200 height=300 >
+                    <div class="card-body">
+                    <button type="submit" name={{action}} value={{action}} class="btn btn-outline-success">{{action}}</button>
+                    </div>
+                </div>
+            </div>
+            {% else %} <!-- action이 incomplete됐으면 파란색 버튼 -->
+            <div class="col">
+                <div class="card" style="width: 18rem;">
+                    <img src={{path}} class="card-img-top" alt="..." width=200 height=300 >
+                    <div class="card-body">
+                    <button type="submit" name={{action}} value={{action}} class="btn btn-outline-primary me-2">{{action}}</button>
+                    </div>
+                </div>
+            </div>
+            {% endif %}
+        {% endfor %}
+        </ul>
+    <ul>
+        <li><p class="ooo"> ㅇ </p></li>
+        {% for action, path in ima_ah.items %}
+            {% if action in complete_list %} <!-- action이 complete됐으면 초록색 버튼 -->
+            <div class="col">
+                <div class="card" style="width: 18rem;">
+                    <img src={{path}} class="card-img-top" alt="..." width=200 height=300 >
+                    <div class="card-body">
+                    <button type="submit" name={{action}} value={{action}} class="btn btn-outline-success">{{action}}</button>
+                    </div>
+                </div>
+            </div>
+            {% else %} <!-- action이 incomplete됐으면 파란색 버튼 -->
+            <div class="col">
+                <div class="card" style="width: 18rem;">
+                    <img src={{path}} class="card-img-top" alt="..." width=200 height=300 >
+                    <div class="card-body">
+                    <button type="submit" name={{action}} value={{action}} class="btn btn-outline-primary me-2">{{action}}</button>
+                    </div>
+                </div>
+            </div>
+            {% endif %}
+        {% endfor %}
+    </ul>
+    <ul>
+        <li><p class="ooo"> ㅈ </p></li>
+        {% for action, path in ima_ja.items %}
+            {% if action in complete_list %} <!-- action이 complete됐으면 초록색 버튼 -->
+            <div class="col">
+
+                <div class="card" style="width: 18rem;">
+                    <img src={{path}} class="card-img-top" alt="..." width=200 height=300 >
+                    <div class="card-body">
+                    <button type="submit" name={{action}} value={{action}} class="btn btn-outline-success">{{action}}</button>
+                    </div>
+                </div>
+            </div>
+            {% else %} <!-- action이 incomplete됐으면 파란색 버튼 -->
+            <div class="col">
+                <div class="card" style="width: 18rem;">
+                    <img src={{path}} class="card-img-top" alt="..." width=200 height=300 >
+                    <div class="card-body">
+                    <button type="submit" name={{action}} value={{action}} class="btn btn-outline-primary me-2">{{action}}</button>
+                    </div>
+                </div>
+            </div>
+            {% endif %}
+        {% endfor %}
+    </ul>
+    <ul>
+        <li><p class="ooo"> ㅊ </p></li>
+        {% for action, path in ima_cha.items %}
+            {% if action in complete_list %} <!-- action이 complete됐으면 초록색 버튼 -->
+            <div class="col">
+                <div class="card" style="width: 18rem;">
+                    <img src={{path}} class="card-img-top" alt="..." width=200 height=300 >
+                    <div class="card-body">
+                    <button type="submit" name={{action}} value={{action}} class="btn btn-outline-success">{{action}}</button>
+                    </div>
+                </div>
+            </div>
+            {% else %} <!-- action이 incomplete됐으면 파란색 버튼 -->
+            <div class="col">
+                <div class="card" style="width: 18rem;">
+                    <img src={{path}} class="card-img-top" alt="..." width=200 height=300 >
+                    <div class="card-body">
+                    <button type="submit" name={{action}} value={{action}} class="btn btn-outline-primary me-2">{{action}}</button>
+                    </div>
+                </div>
+            </div>
+            {% endif %}
+        {% endfor %}
+    </ul>
+    <ul>
+        <li><p class="ooo"> ㅎ </p></li>
+        {% for action, path in ima_ha.items %}
+            {% if action in complete_list %} <!-- action이 complete됐으면 초록색 버튼 -->
+            <div class="col">
+                <div class="card" style="width: 18rem;">
+                    <img src={{path}} class="card-img-top" alt="..." width=200 height=300 >
+                    <div class="card-body">
+                    <button type="submit" name={{action}} value={{action}} class="btn btn-outline-success">{{action}}</button>
+                    </div>
+                </div>
+            </div>
+            {% else %} <!-- action이 incomplete됐으면 파란색 버튼 -->
+            <div class="col">
+                <div class="card" style="width: 18rem;">
+                    <img src={{path}} class="card-img-top" alt="..." width=200 height=300 >
+                    <div class="card-body">
+                    <button type="submit" name={{action}} value={{action}} class="btn btn-outline-primary me-2">{{action}}</button>
+                    </div>
+                </div>
+            </div>
+            {% endif %}
+        {% endfor %}
+        </body>
     </div>
 </form>
 {% endblock %}
