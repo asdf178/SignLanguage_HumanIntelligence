@@ -127,7 +127,7 @@ STATIC_URL = "/static/"
 MEDIA_URL = "/images/"
 MEDIA_ROOT = os.path.join(BASE_DIR, "images")
 
-STATICFILES_DIRS = [os.path.join(BASE_DIR, "static")]
+STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
@@ -147,4 +147,40 @@ IMAGE_LIST = {
 VIDEO_LIST = {
     name[:-4]: "../../../static/videos/" + name
     for name in os.listdir(os.path.join(STATICFILES_DIRS[0], "videos/"))
+}
+ima_ga_LIST = {
+    name[:-4]: "../../../static/ima_ga/" + name
+    for name in os.listdir(os.path.join(STATICFILES_DIRS[0], "ima_ga/"))
+}
+ima_na_LIST = {
+    name[:-4]: "../../../static/ima_na/" + name
+    for name in os.listdir(os.path.join(STATICFILES_DIRS[0], "ima_na/"))
+}
+ima_da_LIST = {
+    name[:-4]: "../../../static/ima_da/" + name
+    for name in os.listdir(os.path.join(STATICFILES_DIRS[0], "ima_da/"))
+}
+ima_ba_LIST = {
+    name[:-4]: "../../../static/ima_ba/" + name
+    for name in os.listdir(os.path.join(STATICFILES_DIRS[0], "ima_ba/"))
+}
+ima_sa_LIST = {
+    name[:-4]: "../../../static/ima_sa/" + name
+    for name in os.listdir(os.path.join(STATICFILES_DIRS[0], "ima_sa/"))
+}
+ima_ah_LIST = {
+    name[:-4]: "../../../static/ima_ah/" + name
+    for name in os.listdir(os.path.join(STATICFILES_DIRS[0], "ima_ah/"))
+}
+ima_ja_LIST = {
+    name[:-4]: "../../../static/ima_ja/" + name
+    for name in os.listdir(os.path.join(STATICFILES_DIRS[0], "ima_ja/"))
+}
+ima_cha_LIST = {
+    name[:-4]: "../../../static/ima_cha/" + name
+    for name in os.listdir(os.path.join(STATICFILES_DIRS[0], "ima_cha/"))
+}
+ima_ha_LIST = {
+    name[:-4]: "../../../static/ima_ha/" + name
+    for name in os.listdir(os.path.join(STATICFILES_DIRS[0], "ima_ha/"))
 }
